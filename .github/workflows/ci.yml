@@ -1,0 +1,59 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    name: ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        # Macs and PCs: every change is built and tested on macOS, Windows and Linux.
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build C++ core
+        run: |
+          cmake -S core -B core/build -DCMAKE_BUILD_TYPE=Release
+          cmake --build core/build --config Release
+
+      - name: Test C++ core against shared vectors
+        run: ctest --test-dir core/build -C Release --output-on-failure
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Unit tests (JS validator, same vectors as C++)
+        run: npm test
+
+      - uses: browser-actions/setup-chrome@v1
+        id: chrome
+
+      - name: Keyboard, focus, reflow and text-spacing tests
+        run: npm run test:e2e
+        env:
+          CHROME_PATH: ${{ steps.chrome.outputs.chrome-path }}
+
+      - name: axe-core WCAG 2.1 AA + Section 508 audit
+        run: npm run test:a11y
+        env:
+          CHROME_PATH: ${{ steps.chrome.outputs.chrome-path }}
+
+      - name: Excel audit report
+        if: always()
+        run: npm run report
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: accessibility-report-${{ matrix.os }}
+          path: reports/
