@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Transactions – PayAble</title>
+  <meta name="description" content="Accessible, sortable and filterable transaction history.">
+  <link rel="stylesheet" href="css/styles.css">
+  <script type="module" src="js/transactions.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="index.html" aria-label="PayAble home">
+        <svg class="brand-mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <rect x="2" y="5" width="20" height="14" rx="3"></rect>
+          <path d="M2 10h20"></path>
+        </svg>
+        <span>PayAble</span>
+      </a>
+      <nav aria-label="Primary">
+        <ul class="nav-list">
+          <li><a href="index.html">Checkout</a></li>
+          <li><a href="transactions.html" aria-current="page">Transactions</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" tabindex="-1">
+    <div class="wrap">
+      <section class="panel" aria-labelledby="tx-heading">
+        <h1 id="tx-heading">Transactions</h1>
+
+        <form class="filters" id="filters" role="search" aria-label="Filter transactions">
+          <div class="field">
+            <label for="search">Search merchant or reference</label>
+            <input id="search" name="search" type="search" autocomplete="off">
+          </div>
+          <div class="field">
+            <label for="status">Status</label>
+            <select id="status" name="status">
+              <option value="">All statuses</option>
+              <option>Approved</option>
+              <option>Pending</option>
+              <option>Refunded</option>
+              <option>Declined</option>
+            </select>
+          </div>
+          <div class="filter-actions">
+            <button type="button" class="button-secondary" id="export">Export for Excel (CSV)</button>
+          </div>
+        </form>
+
+        <p id="result-count" class="result-count" aria-live="polite"></p>
+
+        <div class="table-scroll" role="region" aria-labelledby="tx-caption" tabindex="0">
+          <table class="tx-table">
+            <caption id="tx-caption">Card transactions, newest first. Column headers with buttons can be sorted.</caption>
+            <thead>
+              <tr>
+                <th scope="col" aria-sort="descending" data-key="date">
+                  <button type="button" class="sort-button">Date<span class="sort-icon" aria-hidden="true"></span></button>
+                </th>
+                <th scope="col" aria-sort="none" data-key="merchant">
+                  <button type="button" class="sort-button">Merchant<span class="sort-icon" aria-hidden="true"></span></button>
+                </th>
+                <th scope="col">Card</th>
+                <th scope="col">Status</th>
+                <th scope="col" aria-sort="none" data-key="amount" class="num">
+                  <button type="button" class="sort-button">Amount<span class="sort-icon" aria-hidden="true"></span></button>
+                </th>
+              </tr>
+            </thead>
+            <tbody id="tx-body"></tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <div id="announcer" class="visually-hidden" aria-live="polite" aria-atomic="true"></div>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>PayAble is a portfolio project. It conforms to WCAG 2.1 Level AA – see the <a href="https://github.com/Nishant333-stack/PayAble/blob/main/docs/accessibility-conformance.md">conformance report</a>.</p>
+    </div>
+  </footer>
+</body>
+</html>

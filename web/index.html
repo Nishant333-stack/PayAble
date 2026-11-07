@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Checkout – PayAble</title>
+  <meta name="description" content="An accessible, responsive card checkout built to WCAG 2.1 AA and Section 508.">
+  <link rel="stylesheet" href="css/styles.css">
+  <script type="module" src="js/checkout.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="index.html" aria-label="PayAble home">
+        <svg class="brand-mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <rect x="2" y="5" width="20" height="14" rx="3"></rect>
+          <path d="M2 10h20"></path>
+        </svg>
+        <span>PayAble</span>
+      </a>
+      <nav aria-label="Primary">
+        <ul class="nav-list">
+          <li><a href="index.html" aria-current="page">Checkout</a></li>
+          <li><a href="transactions.html">Transactions</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" tabindex="-1">
+    <div class="wrap checkout-layout">
+      <section class="panel" aria-labelledby="pay-heading" id="pay-panel">
+        <h1 id="pay-heading">Pay by card</h1>
+        <p class="lede">All fields are required. Nothing is sent anywhere – this is a demo using test card numbers.</p>
+
+        <div id="error-summary" class="error-summary" role="alert" tabindex="-1" hidden>
+          <h2 id="error-summary-title">There is a problem</h2>
+          <ul id="error-summary-list"></ul>
+        </div>
+
+        <form id="checkout-form" novalidate>
+          <div class="field" data-field="name">
+            <label for="cc-name">Name on card</label>
+            <p class="error-message" id="cc-name-error" hidden></p>
+            <input id="cc-name" name="cc-name" type="text" autocomplete="cc-name"
+                   autocapitalize="words" spellcheck="false" aria-describedby="cc-name-error">
+          </div>
+
+          <div class="field" data-field="number">
+            <label for="cc-number">Card number</label>
+            <p class="hint" id="cc-number-hint">The long number on the front of your card</p>
+            <p class="error-message" id="cc-number-error" hidden></p>
+            <div class="input-with-badge">
+              <input id="cc-number" name="cc-number" type="text" inputmode="numeric"
+                     autocomplete="cc-number" spellcheck="false" maxlength="23"
+                     aria-describedby="cc-number-hint cc-number-error cc-network">
+              <span class="network-badge" id="cc-network" data-network="unknown">
+                <span class="visually-hidden">Card type: </span><span id="cc-network-name">not detected yet</span>
+              </span>
+            </div>
+          </div>
+
+          <div class="field-row">
+            <div class="field" data-field="expiry">
+              <label for="cc-exp">Expiry date</label>
+              <p class="hint" id="cc-exp-hint">For example, 04 / 29</p>
+              <p class="error-message" id="cc-exp-error" hidden></p>
+              <input id="cc-exp" name="cc-exp" type="text" inputmode="numeric" autocomplete="cc-exp"
+                     spellcheck="false" maxlength="7" class="input-short"
+                     aria-describedby="cc-exp-hint cc-exp-error">
+            </div>
+
+            <div class="field" data-field="cvv">
+              <label for="cc-csc">Security code</label>
+              <p class="hint" id="cc-csc-hint">The <span id="cvv-length">3</span> digits on the <span id="cvv-location">back</span> of your card</p>
+              <p class="error-message" id="cc-csc-error" hidden></p>
+              <input id="cc-csc" name="cc-csc" type="text" inputmode="numeric" autocomplete="cc-csc"
+                     spellcheck="false" maxlength="4" class="input-short"
+                     aria-describedby="cc-csc-hint cc-csc-error">
+            </div>
+          </div>
+
+          <fieldset class="field" data-field="save">
+            <legend>Save this card?</legend>
+            <div class="choice">
+              <input type="radio" id="save-yes" name="save" value="yes">
+              <label for="save-yes">Yes, save it for next time</label>
+            </div>
+            <div class="choice">
+              <input type="radio" id="save-no" name="save" value="no" checked>
+              <label for="save-no">No, use it once</label>
+            </div>
+          </fieldset>
+
+          <button type="submit" class="button-primary" id="pay-button">Pay ₹2,499.00</button>
+        </form>
+      </section>
+
+      <aside class="panel summary" aria-labelledby="summary-heading">
+        <h2 id="summary-heading">Order summary</h2>
+        <dl class="summary-list">
+          <div><dt>Annual plan</dt><dd>₹2,117.80</dd></div>
+          <div><dt>GST (18%)</dt><dd>₹381.20</dd></div>
+          <div class="summary-total"><dt>Total</dt><dd>₹2,499.00</dd></div>
+        </dl>
+        <details class="test-cards">
+          <summary>Test card numbers</summary>
+          <ul>
+            <li>Visa: <code>4111 1111 1111 1111</code></li>
+            <li>Mastercard: <code>5555 5555 5555 4444</code></li>
+            <li>RuPay: <code>6522 0000 0000 0006</code></li>
+            <li>Amex: <code>3782 822463 10005</code></li>
+          </ul>
+        </details>
+      </aside>
+
+      <section class="panel confirmation" id="confirmation" aria-labelledby="confirm-heading" hidden>
+        <h1 id="confirm-heading" tabindex="-1">Payment complete</h1>
+        <p>Your reference number is <strong id="reference"></strong>.</p>
+        <p id="confirm-detail"></p>
+        <button type="button" class="button-secondary" id="new-payment">Make another payment</button>
+      </section>
+    </div>
+  </main>
+
+  <div id="announcer" class="visually-hidden" aria-live="polite" aria-atomic="true"></div>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>PayAble is a portfolio project. It conforms to WCAG 2.1 Level AA – see the <a href="https://github.com/Nishant333-stack/PayAble/blob/main/docs/accessibility-conformance.md">conformance report</a>.</p>
+    </div>
+  </footer>
+</body>
+</html>
