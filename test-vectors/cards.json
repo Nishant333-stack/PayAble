@@ -1,0 +1,45 @@
+{
+  "_comment": "Shared test vectors. Both the C++ core and the JavaScript validator must produce identical results for every case. All numbers are public test PANs or synthetic Luhn-valid numbers - none are real cards.",
+  "cards": [
+    { "pan": "4111111111111111",    "network": "visa",       "luhn": true,  "valid": true  },
+    { "pan": "4012888888881881",    "network": "visa",       "luhn": true,  "valid": true  },
+    { "pan": "4222222222222",       "network": "visa",       "luhn": true,  "valid": true  },
+    { "pan": "4111111111111112",    "network": "visa",       "luhn": false, "valid": false },
+    { "pan": "4111111111111111110", "network": "visa",       "luhn": true,  "valid": true  },
+    { "pan": "5555555555554444",    "network": "mastercard", "luhn": true,  "valid": true  },
+    { "pan": "5105105105105100",    "network": "mastercard", "luhn": true,  "valid": true  },
+    { "pan": "2223003122003222",    "network": "mastercard", "luhn": true,  "valid": true  },
+    { "pan": "5555555555554445",    "network": "mastercard", "luhn": false, "valid": false },
+    { "pan": "378282246310005",     "network": "amex",       "luhn": true,  "valid": true  },
+    { "pan": "371449635398431",     "network": "amex",       "luhn": true,  "valid": true  },
+    { "pan": "3782822463100050",    "network": "amex",       "luhn": false, "valid": false },
+    { "pan": "3782822463100052",    "network": "amex",       "luhn": true,  "valid": false },
+    { "pan": "6522000000000006",    "network": "rupay",      "luhn": true,  "valid": true  },
+    { "pan": "6081000000000009",    "network": "rupay",      "luhn": true,  "valid": true  },
+    { "pan": "6011111111111117",    "network": "discover",   "luhn": true,  "valid": true  },
+    { "pan": "6011000990139424",    "network": "discover",   "luhn": true,  "valid": true  },
+    { "pan": "1234567812345670",    "network": "unknown",    "luhn": true,  "valid": false },
+    { "pan": "4111 1111 1111 1111", "network": "visa",       "luhn": true,  "valid": true  },
+    { "pan": "4111-1111-1111-1111", "network": "visa",       "luhn": true,  "valid": true  },
+    { "pan": "41111111111a1111",    "network": "unknown",    "luhn": false, "valid": false },
+    { "pan": "",                    "network": "unknown",    "luhn": false, "valid": false },
+    { "pan": "411111111111",        "network": "visa",       "luhn": false, "valid": false }
+  ],
+  "expiry": [
+    { "month": 12, "year": 2026, "now": [2026, 11], "valid": true  },
+    { "month": 11, "year": 2026, "now": [2026, 11], "valid": true  },
+    { "month": 10, "year": 2026, "now": [2026, 11], "valid": false },
+    { "month": 1,  "year": 2030, "now": [2026, 11], "valid": true  },
+    { "month": 13, "year": 2027, "now": [2026, 11], "valid": false },
+    { "month": 0,  "year": 2027, "now": [2026, 11], "valid": false },
+    { "month": 6,  "year": 2047, "now": [2026, 11], "valid": false }
+  ],
+  "cvv": [
+    { "cvv": "123",  "network": "visa",       "valid": true  },
+    { "cvv": "1234", "network": "visa",       "valid": false },
+    { "cvv": "1234", "network": "amex",       "valid": true  },
+    { "cvv": "123",  "network": "amex",       "valid": false },
+    { "cvv": "12a",  "network": "mastercard", "valid": false },
+    { "cvv": "",     "network": "rupay",      "valid": false }
+  ]
+}
