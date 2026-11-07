@@ -1,0 +1,24 @@
+{
+  "name": "payable",
+  "version": "1.0.0",
+  "description": "Accessible (WCAG 2.1 AA / Section 508), responsive payments checkout with a C++ card-validation core.",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "start": "node tools/serve.mjs",
+    "test": "node --test \"tests/unit/**/*.test.js\"",
+    "test:a11y": "node tests/a11y/run-audit.mjs",
+    "test:e2e": "node --test --test-concurrency=1 \"tests/e2e/**/*.test.js\"",
+    "report": "node tools/excel-report.mjs",
+    "test:all": "npm test && npm run test:e2e && npm run test:a11y && npm run report"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "axe-core": "^4.14.0",
+    "exceljs": "^4.4.0",
+    "puppeteer-core": "^25.16.0"
+  }
+}
